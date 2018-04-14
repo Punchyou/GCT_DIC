@@ -8,3 +8,4 @@ sc.append(n)
 print("Note with comment: ", n)
 sc.show()
 #n.editorial.comments[0]
+#better use lysics
