@@ -58,22 +58,8 @@ def computeGCTsFromFile_f():
             #ch.lyric = str(chordForm)
             for i in chordForm:
                 ch.addLyric(str(i))
-            
-            #ch.addLyric("lala")
-            #p.parts[-1].append(ch)
-        
-        #for n in notes:
-        #    print(n.offset)
-        #notes.getOffsetInHierarchy(rc)
-        
-
-        #for offset in offsetsAll:
-        #    offset.addLyric("lyric")
-        #rcChordified.show()
-            
-        #p.append(reduction)()
-        #rClef = clef.bestClef(reduction)
         reduction = reduction.transpose(24)
+        print(chordsAll)
         
         #reduction.write("xml", "GCTs_"+fileName)
     return reduction

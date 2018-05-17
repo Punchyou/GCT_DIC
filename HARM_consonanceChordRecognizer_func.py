@@ -12,17 +12,19 @@ from HARM_findMaximalConsonantSubsets_func import HARM_findMaximalConsonantSubse
 from HARM_findExtentions_func import HARM_findExtentions
 from HARM_shortestFormOfSubsets_func import HARM_shortestFormOfSubsets
 from HARM_rootExtentionForm_func import HARM_rootExtentionForm
-#from HARM_shortestFormOfSubsets_func import normalOrderInversion
-import numpy as np
+from HARM_relativeToRootExtentions_func import HARM_relativeToRootExtentions
+from HARM_findPitchClassesfromChord_func import HARM_findPitchClassesfromChord
+from HARM_takeOnlyUniqueValuesfromPitchClasses_func import HARM_takeOnlyUniqueValuesfromPitchClasses
 
-#HARM_consonanceChordRecognizer(c,consWeights) function
 
+#function that returns the final form of chord
 def HARM_consonanceChordRecognizer(chord, consWeights):
-    modChord = [i % 12 for i in chord] #modulo 12 to chord list to take the pitch classes
-    m = np.unique(modChord) #take only unique values
-    #print("Pitches: ", m)
-    
-    #allPaths = np.size((dBin),0) #number of paths (in the tree)
+
+    #find the pitch classes from the original chord
+    modChord = HARM_findPitchClassesfromChord(chord)
+
+    #take only unique values from the pitch classes array
+    m = HARM_takeOnlyUniqueValuesfromPitchClasses(modChord)
 
     #find subsets/possible combinations between pitches
     subs = HARM_findSubsets(m)
@@ -33,24 +35,29 @@ def HARM_consonanceChordRecognizer(chord, consWeights):
     #find Maximal Consonant Subsets
     maxConSubs = HARM_findMaximalConsonantSubsets(consonant)
 
-    #find extentions
+    #find chord extentions
     chExtentions = HARM_findExtentions(m, maxConSubs)
 
     #find shortest form func
     shortest = HARM_shortestFormOfSubsets(maxConSubs)
 
-    #normal order invertion function
-    #noi = normalOrderInversion(maxConSubs)
+    #chord label
+    chordForm, root, chType = HARM_rootExtentionForm(shortest, chExtentions)
 
-    #MAKE HERE A FUNCTIONS FOR CHOOSING THE SHORTEST FORM DEPENDING THE BASELENGTH (code ready in HARM_shortestFormOfSubsets(maxConSubs))
-
-    chordForm = HARM_rootExtentionForm(shortest, chExtentions)
-
-    #PREPEI NA KANW KAI THN SUNARTHSH POU THA VAZW TA EXTENTIONS STO TELOS KAI THA BAZW KAI TO ROOT THS SUGXODIAS STHN ARXH
+    #calculate relative-to-root extentions
+    extentions = HARM_relativeToRootExtentions(root, chExtentions)
 
     return chordForm
 
-#    find max paths of trees
-#    for i in range(0, np.size(dBin, 0)):
-#        pOUT = HARM_traverseOrbit_func.HARM_traverseOrbit(dBin,i,[],1)
-#    return m, dBin, allPaths, pOUT
+class GCT:
+    #id as a static variable maybe?
+    def __init__(self, root, chType, chExtentions, chordForm):
+        self.root = root
+        self.type = chType
+        self.extentions = chExtentions
+        self.label = chordForm
+
+        #print(self.root)
+        #self.allVersions = 
+
+#make a class for printing
