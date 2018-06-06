@@ -2,9 +2,10 @@
 import numpy as np
 def HARM_rootExtentionForm(shortest, chExtentions):
     #find first pitches
+    #print("shortest: ", shortest)
     firstsPitches = []
     for i in range(len(shortest)):
-        for j in range(len(shortest[0])):
+        for j in range(len(shortest[i])):
             firstsPitches.append(shortest[i][j][0])
             pClList = []
             for k in range(len(shortest[0][0])):
@@ -41,5 +42,5 @@ def HARM_rootExtentionForm(shortest, chExtentions):
         notation[i][1] = np.array(notation[i][1])
         j = notation[i][2]< np.max(notation[i][1])
         notation[i][2][j] = notation[i][2][j]+12'''
-    print("Chord: ", notation)
+    #print("Chord: ", notation)
     return(notation, firstsPitches, pClList)

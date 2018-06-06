@@ -90,7 +90,6 @@ def computeGCTsWithTonality():
                     for i in chordForm:
                         ch.addLyric(str(i))
         tmpSurf = tmpSurf.transpose(24)
-        print(chordsAll)
     return tmpSurf
 gct = computeGCTsWithTonality()
-gct.show()
+#gct.show()

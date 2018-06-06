@@ -1,3 +1,5 @@
+#func that finds the extentions relatively to root
+#already contained to the rootExtentionForm function
 def HARM_relativeToRootExtentions(root, chExtentions):
     #move extention relatively to 0
     for i in range(len(chExtentions)):

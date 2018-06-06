@@ -44,9 +44,6 @@ def HARM_consonanceChordRecognizer(chord, consWeights):
     #chord label
     chordForm, root, chType = HARM_rootExtentionForm(shortest, chExtentions)
 
-    #calculate relative-to-root extentions
-    extentions = HARM_relativeToRootExtentions(root, chExtentions)
-
     return chordForm
 
 class GCT:

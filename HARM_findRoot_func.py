@@ -1,4 +1,4 @@
-def HARM_findRoot(shortest, root, chExtentions):#make final form of GCT chord notation
+def HARM_findRoot(shortest, root, chExtentions):
     for i in range(len(shortest)):
         shortest[i].insert(0,root[i])
         shortest[i].append(chExtentions[i])

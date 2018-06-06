@@ -13,9 +13,7 @@ def HARM_shortestFormOfSubsets(maxConSubs):
         n = 0
         while n < len(maxConSubss[i]):
             shiftedCh1 = []
-            #mCSDeq = deque(maxConSubss[i])
-            #mCSDeq.rotate(1)
-            #mCS = mCSDeq.popleft()
+
             maxConSubss[i].insert((len(maxConSubss[i])-1), maxConSubss[i].pop(0)) #circlular shifting
             shiftedCh1.extend(maxConSubss[i])#put it in shoftedCh1 array
             lastFirstInt = maxConSubss[i][-1]-maxConSubss[i][0] #find interval between first and last pitch of the max sconsonand chord
@@ -25,10 +23,9 @@ def HARM_shortestFormOfSubsets(maxConSubs):
             lastFirstInterval1.append(lastFirstInt)
             shiftedCh.append(shiftedCh1) #put it in shiftesCh array
             n = n+1
-            
         shiftedChords.append(shiftedCh)#put in the shifted chords array for each
         lastFirstInterval.append(lastFirstInterval1)
-    #print("shifted: ", shiftedChords)
+
     #print("Intervals between first and last pitrch (for each max consonant): ", lastFirstInterval)
     
     shortestAll = []
@@ -38,8 +35,7 @@ def HARM_shortestFormOfSubsets(maxConSubs):
         for j in range(len(lastFirstInterval[i])):
             if lastFirstInterval[i][j] == shortest:
                 shortestChOfEach.append(shiftedChords[i][j]) #put it in an array
-                shortestAll.append(shortestChOfEach) #make array with all shortest chords
-    #print("Shortest Chords: ", shortestAll)
+        shortestAll.append(shortestChOfEach) #make array with all shortest chords
 
     #NEEDS TESTING
     #if the shortest forms are more than one, you have to choose somehow
