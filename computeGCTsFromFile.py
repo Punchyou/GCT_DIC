@@ -21,8 +21,9 @@ def computeGCTsFromFile_f(j):
     # parse all pieces
     pieces = []
     GCTcountsAll = []
+    chordsOfALLPiecesInAFolder = []
     for pieceName in allDocs:
-        print("-----Parsing piece: " + pieceName + "... ")
+        #print("-----Parsing piece: " + pieceName + "... ")
         pieces.append(pieceName)
     
         # parse piece
@@ -37,14 +38,16 @@ def computeGCTsFromFile_f(j):
         rcChordified = rc.chordify()
         rcFlat = rcChordified.flat
         reduction = rcFlat.getElementsByClass('Chord')
-        
         chordsAll = []
         for ch in reduction:
             chord = [c.pitch.midi for c in ch]
             chordForm = HARM_consonanceChordRecognizer(chord,consWeights)
             chordsAll.append(chordForm)
+            chordsOfALLPiecesInAFolder.append(chordForm[0])
+            #print("All GCTs if a folder: ", chordForm[0])
             for i in chordForm:
                 ch.addLyric(str(i))
+        #chordsOfALLPiecesInAFolder.append(chordsAll)
         reduction = reduction.transpose(24)
 
         def countGCTs(chordsAll):
@@ -56,38 +59,50 @@ def computeGCTsFromFile_f(j):
             return GCTcount
         GCTcoun = countGCTs(chordsAll)
         GCTcountsAll.append(GCTcoun)
-    return GCTcountsAll, chordsAll
+    return GCTcountsAll, chordsOfALLPiecesInAFolder
 
-currFolder = np.array(["TestFileBachChorales", "TestFileEpirotika", "TestFileJazz", "TestFileRebetika", "TestFileModalChoral"])
 def prepareGCTarray(currFolder):
     indxs = []
     #these are the normalized GCTs counts:
     GCTsFromAllFiles = []
     GCTsAllChordForms = []
     for i, j in enumerate(currFolder):
+        #GCTsAllChordForms.append(("Folder " + str(i+1)))
         GCTcountsAll, GCTsChordForm = computeGCTsFromFile_f(j)
         GCTsFromAllFiles.extend(GCTcountsAll)
         GCTsAllChordForms.extend(GCTsChordForm)
         indxs.append(len(GCTcountsAll))
-    print(GCTsAllChordForms)
+    print("GCTs OF ALL FOLDERS:", GCTsAllChordForms)
     idxs = np.array(indxs)
     toIDX = np.cumsum(idxs)
     fromIDX = np.concatenate((np.zeros(1), toIDX[:len(toIDX)-1]))
-    return  GCTsFromAllFiles, idxs, fromIDX, toIDX, GCTsChordForm
+    return  GCTsFromAllFiles, idxs, fromIDX, toIDX, GCTsChordForm, GCTsAllChordForms
 
-GCTsFromAllFiles, idxs, fromIDX, toIDX, GCTsChordForm = prepareGCTarray(currFolder)
 
-def makeGCTsChordFormsADictionary(GCTsChordForm):
+
+#print(GCTsAllChordForms)
+def makeGCTsChordFormsADictionary(GCTsAllChordForms):
     allGCTsDict = {}
-    for i in GCTsChordForm:
+    for i in GCTsAllChordForms:
         allGCTsDict[str(i)] = 0
     print("GCTs DICTIONARY: ", allGCTsDict)
     return allGCTsDict
 
-makeGCTsChordFormsADictionary(GCTsChordForm)
+#calculate counts of the GCTs in all pieces
+def calculateCountsOfGCTs(allGCTsDICT):
+    #GCTcoutsofAllFiles = []
+    #for i in range(len(currFolder)):
+        
+        #for j in GCTsAllChordForms[]:
+         #   allGCTsDict[j] += 1
+     return   
+
+currFolder = np.array(["TestFileBachChorales", "TestFileEpirotika"])# "TestFileJazz" ,"TestFileRebetika", "TestFileModalChoral"])
+GCTsFromAllFiles, idxs, fromIDX, toIDX, GCTsChordForm, GCTsAllChordForms = prepareGCTarray(currFolder)
+allGCTsDICT = makeGCTsChordFormsADictionary(GCTsAllChordForms)
 
 
-def calculatePCA(GCTsFromAllFiles):
+'''def calculatePCA(GCTsFromAllFiles):
     pca = PCA(np.array(GCTsFromAllFiles), standardize=False)
     return pca
 
@@ -103,4 +118,4 @@ def visualizePCA(pca, fromIDX, toIDX):
 
 pca = calculatePCA(GCTsFromAllFiles)
 pcaPlot = visualizePCA(pca, fromIDX, toIDX)
-#fig.savefig('PCAwithColors.png', dpi = 300)
+#fig.savefig('PCAwithColors.png', dpi = 300)'''
