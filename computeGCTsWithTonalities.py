@@ -7,7 +7,7 @@ from copy import deepcopy
 from HARM_consonanceChordRecognizer_func import HARM_consonanceChordRecognizer
 
 def computeGCTsWithTonality():
-    currFolder = 'TestFileBachChorales'
+    currFolder = 'TestFile'
 
     # get all the files in folder with .xml extension
     allDocs = glob.glob(currFolder + os.sep + "*.xml")
@@ -70,7 +70,6 @@ def computeGCTsWithTonality():
                     chordNotes = ch.pitchNames
                     chord = [c.pitch.midi for c in ch]
                     chordForm = HARM_consonanceChordRecognizer(chord,consWeights)
-                    print(chordForm)
                     chordsAll.append(chordForm)
                     for i in chordForm:
                         ch.addLyric(str(i))
@@ -92,4 +91,4 @@ def computeGCTsWithTonality():
         tmpSurf = tmpSurf.transpose(24)
     return tmpSurf
 gct = computeGCTsWithTonality()
-#gct.show()
+gct.show()

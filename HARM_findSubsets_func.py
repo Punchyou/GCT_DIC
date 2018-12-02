@@ -14,4 +14,5 @@ def HARM_findSubsets(m):
     for i in subsRev:
         subs.append(sorted(i))
     #print("Subsets: ", subs)
+    print(subs)
     return subs

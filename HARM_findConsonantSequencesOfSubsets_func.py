@@ -24,4 +24,5 @@ def HARM_findConsonantSequencesOfSubsets(consWeights, subs):
         # all values of the list equals one, the pitch sequence is consonant
         if np.all(dBin)==1:
             cons.append(s)
+    #print("consonant sequence of subsets: ", cons)
     return cons

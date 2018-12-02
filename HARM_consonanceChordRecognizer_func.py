@@ -31,19 +31,19 @@ def HARM_consonanceChordRecognizer(chord, consWeights):
     
     #find consonant intervals between pitches
     consonant = HARM_findConsonantSequencesOfSubsets(consWeights, subs)
-
+    
     #find Maximal Consonant Subsets
     maxConSubs = HARM_findMaximalConsonantSubsets(consonant)
-
+    
     #find chord extentions
     chExtentions = HARM_findExtentions(m, maxConSubs)
 
     #find shortest form func
     shortest = HARM_shortestFormOfSubsets(maxConSubs)
-
+    
     #chord label
     chordForm, root, chType = HARM_rootExtentionForm(shortest, chExtentions)
-
+    print(chordForm)
     return chordForm
 
 class GCT:
